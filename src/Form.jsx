@@ -3,6 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { GrValidate } from 'react-icons/gr'
 import { BsFillCheckSquareFill } from 'react-icons/bs'
 import { Formulario } from './components/Formulario'
+import { motion } from 'framer-motion'
+import { motionAnim } from './utils/vars'
 
 export const Form = () => {
   const methods = useForm()
@@ -26,17 +28,18 @@ export const Form = () => {
         <Formulario />
 
         <div className="mt-5">
-          <p className="font-semibold text-violet-500 mb-5 flex items-center gap-2 place-content-center">
+          <motion.p {...motionAnim(0.5)}
+            className="font-semibold text-violet-500 mb-5 flex items-center gap-2 place-content-center">
             <BsFillCheckSquareFill /> Adhiero al Partido Libertario de La Pampa
-          </p>
-          <button
+          </motion.p>
+          <motion.button {...motionAnim(0.55)}
             disabled={success}
             onClick={onSubmit}
             className="mx-auto p-5 rounded-md bg-violet-600 hover:bg-violet-800 font-semibold text-white flex items-center gap-1"
           >
             <GrValidate className='text-xl' />
             Afiliarme
-          </button>
+          </motion.button>
           {success && (
             <p className="font-semibold text-green-500 mt-5 flex items-center gap-2 place-content-center">
               <BsFillCheckSquareFill /> El formulario se ha enviado correctamente
