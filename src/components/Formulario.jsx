@@ -10,17 +10,32 @@ import {
 } from '../utils/inputValidations'
 import PROVINCIAS from '../utils/provincias.json'
 import DEPARTAMENTOS from '../utils/departamentos.json'
-import MUNICIPIOS from '../utils/municipios.json'
+import LOCALIDADES from '../utils/localidades.json'
 import { motionAnim, sortNombres } from '../utils/vars'
 import { motion } from 'framer-motion'
 
+export function sortLocalidades(a, b){
+    if(a.toLowerCase() < b.toLowerCase()) return -1;
+    if(a.toLowerCase() > b.toLowerCase()) return 1;
+    return 0;
+}
+
 export const Formulario = () => {
     const [selProvincia, setProvincia] = useState('0')
+    const [selDepartamento, setDepartamento] = useState([])
     
     const funcSelProvincia = () => {
         const getID = document.getElementById('prov_nombre')
         setProvincia(getID.options[getID.selectedIndex].text)
         document.getElementById('prov_departamento').selectedIndex = 0
+        document.getElementById('prov_municipio').selectedIndex = 0
+        setDepartamento([])
+    }
+    
+    const funcSelDepartamento = () => {
+        const getID = document.getElementById('prov_departamento')
+        const getDepartamentoID = DEPARTAMENTOS.departamentos.filter(d=>d.provincia.nombre === selProvincia && d.nombre === getID.options[getID.selectedIndex].text)[0].id
+        setDepartamento(LOCALIDADES.filter(l=>l.departamento.id === getDepartamentoID).map(l=>l.nombre))
         document.getElementById('prov_municipio').selectedIndex = 0
     }
 
@@ -63,8 +78,8 @@ export const Formulario = () => {
 
         <motion.div {...motionAnim(0.4)} className={`${clase} md:grid-cols-3`}>
             <Input {...select_validation} nameId='prov_nombre' label='Provincia' combos={PROVINCIAS.provincias.sort(sortNombres).map(p=>p.nombre)} onChangeFunc={funcSelProvincia} />
-            <Input {...select_validation} nameId='prov_departamento' label='Departamento' combos={DEPARTAMENTOS.departamentos.filter(d=>d.provincia.nombre === selProvincia).sort(sortNombres).map(d=>d.nombre)} />
-            <Input {...select_validation} nameId='prov_municipio' label='Municipio' combos={MUNICIPIOS.municipios.filter(m=>m.provincia.nombre === selProvincia).sort(sortNombres).map(m=>m.nombre)} />
+            <Input {...select_validation} nameId='prov_departamento' label='Departamento' combos={DEPARTAMENTOS.departamentos.filter(d=>d.provincia.nombre === selProvincia).sort(sortNombres).map(d=>d.nombre)} onChangeFunc={funcSelDepartamento} />
+            <Input {...select_validation} nameId='prov_municipio' label='Municipio' combos={[...new Set(selDepartamento)].sort(sortLocalidades).map(l=>l)} />
         </motion.div>
 
         <motion.div {...motionAnim(0.45)} className={`${clase} md:grid-cols-2`}>
