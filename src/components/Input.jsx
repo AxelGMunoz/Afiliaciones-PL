@@ -10,27 +10,25 @@ export const Input = ({
   type,
   placeholder,
   validation,
-  multiline,
   combos,
   comboValue,
   onChangeFunc
 }) => {
   const {
     register,
-    formState: { errors },
+    formState: { errors }
   } = useFormContext()
 
   const inputErrors = findInputError(errors, nameId)
   const isInvalid = isFormInvalid(inputErrors)
 
-  const input_tailwind = 'p-5 font-medium rounded-md w-full border border-slate-300 placeholder:opacity-60'
-  
   return (
     <div className={`flex flex-col ${(type === 'file') ? 'text-xs w-auto' : 'w-full'} gap-2`}>
       <div className="flex justify-between">
-        <label htmlFor={nameId} className="text-sm font-semibold capitalize">
+        <label htmlFor={nameId} className="uppercase tracking-wide text-gray-700 text-sm font-bold">
           {label}
         </label>
+
         <AnimatePresence mode="wait" initial={false}>
           {isInvalid && (
             <motion.p className="text-xs flex items-center gap-1 px-2 font-semibold text-red-500 bg-red-100 rounded-md"
@@ -44,32 +42,31 @@ export const Input = ({
           )}
         </AnimatePresence>
       </div>
-      {multiline ? (
-        <textarea
-          id={nameId}
-          type={type}
-          className={`${input_tailwind} min-h-[10rem] max-h-[20rem] resize-y`}
-          placeholder={placeholder}
-          {...register(nameId, validation)}
-        ></textarea>
-      ) : (
-      (type === 'select') ? (
-        <select
-          id={nameId}
-          className={input_tailwind}
-          {...register(nameId, validation)}
-          onChange={onChangeFunc}
-        >
-          <option defaultValue={(comboValue === '') ? 'no' : comboValue}>{(placeholder === '') ? label : placeholder}</option>
-          {combos.map((item,index) => <option key={index} value={index}>{item}</option> )}
-        </select>
-      ) : (<input
-      id={nameId}
-      type={type}
-      className={`${input_tailwind} ${(type === 'file') ? '-mr-32' : null}`}
-      placeholder={(placeholder === '') ? label : placeholder}
-      {...register(nameId, validation)}
-    />))}
+
+      {(()=>{
+        const input_class = 'p-5 font-medium rounded-md w-full border border-slate-300 placeholder:opacity-60'
+        const input_placeholder = (placeholder === '') ? label : placeholder
+
+        switch(type){
+          case 'select':
+            return <select id={nameId} className={input_class}
+              {...register(nameId, validation)} onChange={onChangeFunc}>
+                <option defaultValue={(comboValue === '') ? 'no' : comboValue}>
+                  {input_placeholder}
+                </option>
+                { combos.map((item,index) => <option key={index} value={index}>{item}</option>) }
+            </select>
+          case 'area':
+            return <textarea id={nameId} type={type} placeholder={input_placeholder} {...register(nameId, validation)}
+              className={`${input_class} min-h-[10rem] max-h-[20rem] resize-y`}></textarea>
+          case 'file':
+            return <input id={nameId} type={type} placeholder={input_placeholder} {...register(nameId, validation)}
+              className={`${input_class} -mr-32 cursor-pointer`} />
+          default:
+            return <input id={nameId} type={type} placeholder={input_placeholder} {...register(nameId, validation)}
+              className={input_class} />
+        }
+      })()}
     </div>
   )
 }

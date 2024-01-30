@@ -18,7 +18,7 @@ export const text_validation = {
   export const area_validation = {
     nameId: 'area',
     label: 'Area',
-    multiline: true,
+    type: 'area',
     placeholder: '',
     validation: {
       required: {
