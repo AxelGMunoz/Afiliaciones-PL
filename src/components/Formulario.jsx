@@ -14,7 +14,7 @@ import LOCALIDADES from '../utils/localidades.json'
 import { motionAnim, sortNombres } from '../utils/vars'
 import { motion } from 'framer-motion'
 
-export function sortLocalidades(a, b){
+function sortLocalidades(a, b){
     if(a.toLowerCase() < b.toLowerCase()) return -1;
     if(a.toLowerCase() > b.toLowerCase()) return 1;
     return 0;
