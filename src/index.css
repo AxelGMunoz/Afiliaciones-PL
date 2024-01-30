@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply scrollbar-thin scrollbar-thumb-violet-600 scrollbar-track-violet-300 overflow-y-scroll;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   @apply bg-slate-50;

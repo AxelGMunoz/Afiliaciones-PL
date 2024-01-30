@@ -5,6 +5,7 @@ Tecnologías y librerias que utiliza:
 - Vite
 - React
 - TailwindCSS
+- tailwind-scrollbar
 - react-hook-form
 - react-icons
 - framer-motion
