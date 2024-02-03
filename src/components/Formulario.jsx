@@ -50,7 +50,7 @@ export const Formulario = () => {
         <motion.div {...motionAnim(0.15)} className={`${clase} md:grid-cols-3`}>
             <Input {...email_validation} nameId='email' lable='Email' />
             <Input {...num_validation} nameId='tel_cel' label='Teléfono celular' />
-            <Input {...num_validation} nameId='tel_fijo' label='Teléfono fijo' />
+            <Input {...num_validation} nameId='tel_fijo' label='Teléfono fijo' validation={false} />
         </motion.div>
 
         <motion.div {...motionAnim(0.2)} className={`${clase} md:grid-cols-2`}>
@@ -72,7 +72,7 @@ export const Formulario = () => {
         <motion.div {...motionAnim(0.35)}  className={`${clase} md:grid-cols-4`}>
             <Input {...text_validation} nameId='dom_calle' label='Domilicio: calle' />
             <Input {...num_validation} nameId='dom_altura' label='Domilicio: altura' />
-            <Input {...text_validation} nameId='dom_pisodpto' label='Domilicio: piso - dpto' />
+            <Input {...text_validation} nameId='dom_pisodpto' label='Domilicio: piso - dpto' validation={false} />
             <Input {...num_validation} nameId='dom_cp' label='Código postal' />
         </motion.div>
 
