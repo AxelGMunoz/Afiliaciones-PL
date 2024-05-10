@@ -10,4 +10,7 @@ Tecnologías y librerias que utiliza:
 - react-icons
 - framer-motion
 
-DEMO: https://afiliaciones.libertariopampa.com.ar/
+# AVISO
+El Partido Libertario cambió a La Libertad Avanza, por lo que este repositorio ya no se continuará.
+
+DEMO (nueva): https://afiliaciones.lalibertadavanzalp.com.ar/
